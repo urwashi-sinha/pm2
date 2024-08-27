@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temperature Converter</title>
+</head>
+<body>
+  <h1>Temperature Converter</h1>
+
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } %>
+
+  <form action="/convert" method="post">
+    <label for="temp">Temperature:</label>
+    <input type="text" id="temp" name="temp" value="<%= typeof temp !== 'undefined' ? temp : '' %>">
+
+    <label for="fromUnit">From:</label>
+    <select id="fromUnit" name="fromUnit">
+      <option value="celsius" <%= fromUnit === 'celsius' ? 'selected' : '' %>>Celsius</option>
+      <option value="fahrenheit" <%= fromUnit === 'fahrenheit' ? 'selected' : '' %>>Fahrenheit</option>
+    </select>
+
+    <label for="toUnit">To:</label>
+    <select id="toUnit" name="toUnit">
+      <option value="celsius" <%= toUnit === 'celsius' ? 'selected' : '' %>>Celsius</option>
+      <option value="fahrenheit" <%= toUnit === 'fahrenheit' ? 'selected' : '' %>>Fahrenheit</option>
+    </select>
+
+    <button type="submit">Convert</button>
+  </form>
+
+  <% if (convertedTemp) { %>
+    <p>Converted Temperature: <%= convertedTemp %> <%= toUnit %></p>
+  <% } %>
+
+  <h2>Conversion History</h2>
+<ul>
+  <% if (conversionHistory && conversionHistory.length > 0) { %>
+    <% conversionHistory.forEach((historyItem, index) => { %>
+      <li>
+        <%= historyItem.temp %> <%= historyItem.fromUnit %> to <%= historyItem.toUnit %> = <%= historyItem.convertedTemp %> <%= historyItem.toUnit %>
+      </li>
+    <% }); %>
+  <% } else { %>
+    <li>No conversion history available.</li>
+  <% } %>
+</ul>
+
+
+</body>
+</html>
